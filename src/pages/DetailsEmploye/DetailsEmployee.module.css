@@ -1,0 +1,209 @@
+.page {
+    padding: 24px;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fb;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .name {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  
+  .role {
+    color: #555;
+    margin: 4px 0;
+  }
+  
+  .matricule {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  /* Buttons */
+  .actions button {
+    margin-left: 10px;
+  }
+  
+  .btnPrimary {
+    background: #2563eb;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btnDanger {
+    background: #ea1d1d;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .btnSecondary {
+    background: #e5e7eb;
+    color: #111;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btnSuccess {
+    background: #08e734;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  
+  /* Cards */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  }
+  
+  .cardTitle {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+  
+  /* Full width */
+  .fullWidth {
+    grid-column: 1 / -1;
+  }
+  
+  /* Infos list */
+  .detailsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .detailsList li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 14px;
+  }
+  
+  .detailsList span {
+    color: #666;
+  }
+  
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .timelineItem {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .timelineDate {
+    min-width: 110px;
+    font-size: 13px;
+    color: #2563eb;
+    font-weight: 600;
+  }
+  
+  .timelineContent strong {
+    display: block;
+    font-size: 14px;
+  }
+  
+  .timelineContent p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+  }
+  
+  /* Documents */
+  .documentsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .documentsTable th,
+  .documentsTable td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+  }
+  
+  .documentsTable th {
+    background: #f9fafb;
+    font-weight: 700;
+  }
+  
+  .docLink {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .docLink:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+  }
+  
