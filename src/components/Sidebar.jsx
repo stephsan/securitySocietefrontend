@@ -6,118 +6,113 @@ function Sidebar() {
 	
   return (
     
-        <nav id="sidebar" className="sidebar js-sidebar">
-			<div className="sidebar-content js-simplebar">
-				<a className="sidebar-brand" href="index.html">
-          <span className="align-middle">AdminKit</span>
-        </a>
+	<ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-				<ul className="sidebar-nav">
-					<li className="sidebar-header">
-						Pages
-					</li>
+	<a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+		{/* <div className="sidebar-brand-icon rotate-n-15">
+			<i className="fas fa-laugh-wink"></i>
+		</div> */}
+		<div className="sidebar-brand-text mx-3">GesTSecure <sup></sup></div>
+	</a>
 
-					<li className="sidebar-item active">
-					{/* <a className="sidebar-link" href="index.html"> */}
-                    <NavLink to="/" end className="sidebar-link">
-                    <i className="align-middle" data-feather="sliders"></i> <span className="align-middle">Dashboard</span>
-                    </NavLink>
-                        
-                    {/* </a> */}
-					</li>
-                    <li className="sidebar-item">
-                        <NavLink to="/liste-personne" className="sidebar-link">
-                            <i className="align-middle" data-feather="personne"></i> <span className="align-middle">Personnelles</span>
-                        </NavLink>
-					</li>
-					<li className="sidebar-item">
-                        <NavLink to="/liste-clients" className="sidebar-link">
-                            <i className="align-middle" data-feather="user"></i> <span className="align-middle">Clients</span>
-                        </NavLink>
-					</li>
 
-					<li className="sidebar-item">
-						<a className="sidebar-link" href="pages-sign-in.html">
-              <i className="align-middle" data-feather="log-in"></i> <span className="align-middle">Sites</span>
-            </a>
-					</li>
+	<hr className="sidebar-divider my-0"/>
 
-					<li className="sidebar-item" >
-						<a className="sidebar-link" href="pages-sign-up.html">
-             			<i className="align-middle" data-feather="user-plus"></i> <span className="align-middle">Sign Up</span>
-            </a>
-					</li>
+	<li className="nav-item">
+		 <NavLink to="/" className="nav-link" href="index.html">
+			<i className="fas fa-fw fa-tachometer-alt"></i>
+		<span>Dashboard</span></NavLink> 
+	</li>
 
-					<li className="sidebar-item">
-						<a className="sidebar-link" href="pages-blank.html">
-              <i className="align-middle" data-feather="book"></i> <span className="align-middle">Blank</span>
-            </a>
-					</li>
+	<hr className="sidebar-divider"/>
 
-					<li className="sidebar-header">
-						Parametrage & Adminstration
-					</li>
+	<div className="sidebar-heading">
+		Gestion de l'entreprise
+	</div>
 
-					<li className="sidebar-item">
-						<a className="sidebar-link" href="ui-buttons.html">
-              <i className="align-middle" data-feather="square"></i> <span className="align-middle">Utilisateurs</span>
-            </a>
-					</li>
-
-					<li className="sidebar-item">
-						<NavLink to="/liste-parametre" className="sidebar-link">	
-             			 	<i className="align-middle" data-feather="check-square"></i> <span className="align-middle">Parametres</span>
-            			</NavLink>
-					</li>
-
-					<li className="sidebar-item">
-					<NavLink to="/liste-valeur" className="sidebar-link">
-              			<i className="align-middle" data-feather="grid"></i> <span className="align-middle">Valeurs</span>
-					</NavLink>
-					</li>
-
-					<li className="sidebar-item">
-						<a className="sidebar-link" href="ui-typography.html">
-              <i className="align-middle" data-feather="align-left"></i> <span className="align-middle">Roles</span>
-            </a>
-					</li>
-
-					<li className="sidebar-item">
-					<NavLink to="/liste-prestation" className="sidebar-link">
-              			<i className="align-middle" data-feather="coffee"></i> <span className="align-middle">Prestation </span>
-					</NavLink>
-					</li>
-
-					<li className="sidebar-header">
-						Plugins & Addons
-					</li>
-
-					<li className="sidebar-item">
-						<a className="sidebar-link" href="charts-chartjs.html">
-              <i className="align-middle" data-feather="bar-chart-2"></i> <span className="align-middle">Charts</span>
-            </a>
-					</li>
-
-					<li className="sidebar-item">
-						<a className="sidebar-link" href="maps-google.html">
-              <i className="align-middle" data-feather="map"></i> <span className="align-middle">Maps</span>
-            </a>
-					</li>
-				</ul>
-
-				<div className="sidebar-cta">
-					<div className="sidebar-cta-content">
-						<strong className="d-inline-block mb-2">Upgrade to Pro</strong>
-						<div className="mb-3 text-sm">
-							Are you looking for more components? Check out our premium version.
-						</div>
-						<div className="d-grid">
-							<a href="upgrade-to-pro.html" className="btn btn-primary">Upgrade to Pro</a>
-						</div>
-					</div>
-				</div>
+	<li className="nav-item">
+		<a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+			aria-expanded="true" aria-controls="collapseTwo">
+			<i className="fas fa-fw fa-cog"></i>
+			<span>Gestion des contrats</span>
+		</a>
+		<div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+			<div className="bg-white py-2 collapse-inner rounded">
+				{/* <h6 className="collapse-header">Custom Components:</h6> */}
+				<NavLink to="/liste-clients" className="collapse-item" href="buttons.html">Clients</NavLink>
+				<NavLink to="/lister-contrat" className="collapse-item" href="cards.html">Contrats</NavLink>
 			</div>
-		</nav>
+		</div>
+	</li>
+
+
+	<li className="nav-item">
+		<a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+			aria-expanded="true" aria-controls="collapseUtilities">
+			<i className="fas fa-fw fa-wrench"></i>
+			<span>Ressources Humaine</span>
+		</a>
+		<div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"
+			data-parent="#accordionSidebar">
+			<div className="bg-white py-2 collapse-inner rounded">
+				<NavLink to="/liste-personne" className="collapse-item" href="utilities-color.html">Personnels</NavLink>
+				<NavLink to="/liste-personne" className="collapse-item" href="utilities-color.html">Sanctions</NavLink>
+				{/* <a className="collapse-item" href="utilities-border.html">Borders</a>
+				<a className="collapse-item" href="utilities-animation.html">Animations</a>
+				<a className="collapse-item" href="utilities-other.html">Other</a> */}
+			</div>
+		</div>
+	</li>
+
+	<hr className="sidebar-divider"/>
+
+	<div className="sidebar-heading">
+		Adminstration
+	</div>
+
+	<li className="nav-item active">
+		<a className="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+			aria-controls="collapsePages">
+			<i className="fas fa-fw fa-folder"></i>
+			<span>Paramétrage</span>
+		</a>
+		<div id="collapsePages" className="collapse show" aria-labelledby="headingPages"
+			data-parent="#accordionSidebar">
+			<div className="bg-white py-2 collapse-inner rounded">
+				<NavLink to="/liste-parametre" className="collapse-item" href="login.html">Paramètres</NavLink>
+				<NavLink to="/liste-valeur" className="collapse-item" href="login.html">Valeurs</NavLink>
+				<NavLink to="/liste-prestation" className="collapse-item" href="login.html">Prestations</NavLink>
+				
+				{/* <a className="collapse-item" href="register.html">Register</a>
+				<a className="collapse-item" href="forgot-password.html">Forgot Password</a>
+				<div className="collapse-divider"></div>
+				<h6 className="collapse-header">Other Pages:</h6>
+				<a className="collapse-item" href="404.html">404 Page</a>
+				<a className="collapse-item active" href="blank.html">Blank Page</a> */}
+			</div>
+		</div>
+	</li>
+
+	
+	{/* <li className="nav-item">
+		<a className="nav-link" href="charts.html">
+			<i className="fas fa-fw fa-chart-area"></i>
+			<span>Charts</span></a>
+	</li>
+
+	<li className="nav-item">
+		<a className="nav-link" href="tables.html">
+			<i className="fas fa-fw fa-table"></i>
+			<span>Tables</span></a>
+	</li> */}
+
+	
+	<hr className="sidebar-divider d-none d-md-block"/>
+	<div className="text-center d-none d-md-inline">
+		<button className="rounded-circle border-0" id="sidebarToggle"></button>
+	</div>
+
+</ul>
     
   )
 }

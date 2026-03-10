@@ -101,7 +101,7 @@ const Prestation = () => {
           {prestations?.map((prestation, index) => (
             <tr key={prestation.id}>
               <td>{index + 1}</td>
-              <td>{prestation.nature_prestation}</td>
+              <td>{prestation.nature}</td>
               <td>{prestation.montant_min_prestation || "-"}</td>
               <td>{prestation.description_prestation || "-"}</td>
               <td className="text-center">

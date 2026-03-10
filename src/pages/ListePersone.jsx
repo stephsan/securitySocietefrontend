@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom'
 
 
 function ListePersone() {
-    const navigate = useNavigate(); 
+const navigate = useNavigate(); 
 const[LesPersonnes,setLesPersonnes]=useState();
 const[keyword,setKeyword]=useState();
-
 
 const recupererListe=async()=>{
 try {
@@ -21,7 +20,6 @@ try {
     console.error('Erreur récupération personnes:', error)//;
   }
 }
-
 const searchPersonne=async (e)=>{
     e.preventDefault();
     try {

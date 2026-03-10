@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import api from '../api/api';
+import { showError } from '../utils/notify';
 
 function Personne() {
 
@@ -12,14 +13,29 @@ function Personne() {
     const [imageId, setImageId] = useState('');
     const [typeDocuments, setTypeDocuments] = useState([]);
     const [documents, setDocuments] = useState([]);
+    const [ListeSituationMatrimoniales, setListeSituationMatrimoniales] = useState([]);
+
 //recuperer la liste des types de documment au chargement du composant 
 //id 5 pour le parametre_id de type de document qui est a 5
     const id=5
-    useEffect(() => {
+    const fetchSituationMatrimoniale = async()=>{
+        try{
+          const res = await api.get("/return-valeur/8");
+          setListeSituationMatrimoniales(res.data.data || res.data);
+        }catch(e){
+          showError("Erreur chargement situation matrimoniale");
+        }
+    }
         const fetchTypes = async () => {
-        const res = await api.get("/return-valeur/5");
-        setTypeDocuments(res.data.data);
-        };
+            try{
+                const res = await api.get("/return-valeur/5");
+                setTypeDocuments(res.data.data);
+            }catch(e){
+                showError("Erreur chargement de types de documents");
+            }
+            };
+    useEffect(() => {
+        fetchSituationMatrimoniale();
         fetchTypes();
     }, []);
     const {
@@ -125,7 +141,7 @@ function Personne() {
 
     return (
 
-        <div className="card">
+        <div className="card" >
             <div className="card-header">
                 <h5>Ajouter un Agent</h5>
             </div>
@@ -134,8 +150,7 @@ function Personne() {
 
                 <form onSubmit={handleSubmit(formSubmit)}>
 
-                    {/* Photo */}
-                    <div className="mb-3">
+                <div className="mb-3">
                         <label className="form-label">
                             Photo de l'agent
                         </label>
@@ -146,52 +161,132 @@ function Personne() {
                             onChange={chargerImage}
                         />
                     </div>
-
-                    {/* Matricule */}
-                    <div className="mb-3">
-                        <input
-                            {...register('matricule', { required: true })}
-                            className="form-control"
-                            placeholder="Matricule"
-                        />
-                        {errors.matricule && <small>Matricule obligatoire</small>}
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="mb-3">
+                            <label className="form-label">
+                                    Matricule
+                            </label>
+                                <input
+                                    {...register('matricule', { required: true })}
+                                    className="form-control"
+                                    placeholder="Matricule"
+                                />
+                                {errors.matricule && <small>Matricule obligatoire</small>}
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="mb-3">
+                                <label className="form-label">
+                                    Nom de l'agent
+                                </label>
+                                <input
+                                    {...register('nom', { required: true })}
+                                    className="form-control"
+                                    placeholder="Nom"
+                                />
+                                {errors.nom && <small>Nom obligatoire</small>}
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            {/* Prénom */}
+                            <div className="mb-3">
+                                <label className="form-label">
+                                    Prénom de l'agent
+                                </label>
+                                <input
+                                    {...register('prenom', { required: true })}
+                                    className="form-control"
+                                    placeholder="Prénom"
+                                />
+                                {errors.prenom && <small>Prénom obligatoire</small>}
+                            </div>
+                        </div>
                     </div>
-
-                    {/* Nom */}
-                    <div className="mb-3">
-                        <input
-                            {...register('nom', { required: true })}
-                            className="form-control"
-                            placeholder="Nom"
-                        />
+                    <div className="row">
+                        <div className="col-md-6">
+                                <label className="form-label">
+                                    Date de Naissance
+                                </label>
+                            <div className="mb-3">
+                                <input
+                                type="date"
+                                    {...register('date_de_naiss',{ required: true })}
+                                    className="form-control"
+                                    placeholder="Date naissance"
+                                />
+                                {errors.date_de_naiss && <small>Date de naissance obligatoire</small>}
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                                <label className="form-label">
+                                    Lieu de Naissance
+                                </label>
+                            <div className="mb-3">
+                                <input
+                                type="text"
+                                    {...register('lieu_de_naiss', { required: true })}
+                                    className="form-control"
+                                    placeholder="Lieu naissance"
+                                />
+                                    {errors.lieu_de_naiss && <small>lieu de naissance obligatoire</small>}
+                            </div>
+                        </div>
                     </div>
-
-                    {/* Prénom */}
-                    <div className="mb-3">
-                        <input
-                            {...register('prenom', { required: true })}
-                            className="form-control"
-                            placeholder="Prénom"
-                        />
+                    <div className="row">
+                        <div className="col-md-5">  
+                            <label className="form-label">
+                                    Situation matrimonial
+                            </label>  
+                        </div>
+                        <div className="col-md-7">
+                            <label className="form-label">
+                                    Nom du conjoint
+                            </label>  
+                        </div>
                     </div>
-
-                    {/* Date naissance */}
-                    <div className="mb-3">
+                    <div className="row">
+                        <div className="col-md-6">  
+                            <label className="form-label">
+                                    Contacts
+                            </label> 
+                            <input
+                                type="text"
+                                    {...register('contact', { required: true })}
+                                    className="form-control"
+                                    placeholder="Contacts"
+                             />
+                                {errors.contact && <small>Contact obligatoire</small>}
+                        </div>
+                        <div className="col-md-6">  
+                            <label className="form-label">
+                                    Personne à prévenir en cas de besoin
+                            </label>
+                            <input
+                                type="text"
+                                    {...register('date_de_naiss', { required: true })}
+                                    className="form-control"
+                                    placeholder="Personne à prévenir en cas de besoin"
+                             />
+                        </div>
+                    
+                    </div>
+                    {/* <div className="mb-3">
                         <input
-                        type="date"
+                        type="text"
                             {...register('date_de_naiss')}
                             className="form-control"
                             placeholder="Date naissance"
                         />
-                    </div>
-                    <div className="mb-3">
+                    </div> */}
+                    {/* <div className="mb-3">
                         <input
                         type="date"
                             {...register('date_embauche')}
                             className="form-control"
                             placeholder="Date D'embauche"
                         />
-                    </div>
+                    </div> */}
 
                     {/* Documents */}
                     <hr />

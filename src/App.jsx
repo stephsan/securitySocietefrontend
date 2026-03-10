@@ -16,6 +16,9 @@ import ListeValeur from './pages/Parametres/ListeValeur';
 import Client from './Client/Client';
 import DetailsClient from './Client/DetailsClient';
 import Prestation from './pages/Parametres/Prestation';
+import AjouterContrat from './pages/AjouterContrat';
+import ListerContrat from './pages/ListerContrat';
+import ModifierContrat from './pages/ModifierContrat';
 
 function App() {
   return (<BrowserRouter>
@@ -34,8 +37,9 @@ function App() {
           <Route path="/liste-clients" element={<Client/>} />
           <Route path="/client/:id" element={<DetailsClient />} />
           <Route path="/liste-prestation" element={<Prestation/>} />
-
-
+          <Route path='/add-contrat' element={<AjouterContrat/>}/>
+          <Route path='/lister-contrat' element={<ListerContrat/>}/>
+          <Route path='/modifier-contrat/:id' element={<ModifierContrat/>}/>
 
         </Route>
       </Route>
