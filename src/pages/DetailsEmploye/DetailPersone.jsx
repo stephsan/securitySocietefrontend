@@ -126,6 +126,7 @@ const openFonctionModal=()=>{
 }
       useEffect(()=>{ 
           fetchPersonne();
+          console.log(personne)
           fetchFonctions()
       },[id])
  //Tres important car sans ce controle il peut essayer dacceder aux proprietes de personne pendant que celui ci nest pas encore chargé
@@ -169,10 +170,13 @@ const openFonctionModal=()=>{
             <li><span>Matricule</span><strong>{personne.matricule}</strong></li>
             <li><span>Nom</span><strong>{personne.nom}</strong></li>
             <li><span>Prénom</span><strong>{personne.prenom}</strong></li>
+            <li><span>Genre</span><strong>{personne.sexe}</strong></li>
             <li><span>Date de naissance</span><strong>{personne.date_de_naiss}</strong></li>
-            <li><span>date d'embauche</span><strong>{personne.date_embauche}</strong></li>
-            <li><span>Email</span><strong>{personne.email}</strong></li>
-            <li><span>Téléphone</span><strong>{personne.telephone}</strong></li>
+            <li><span>Lieu de naissance</span><strong>{personne.lieu_de_naissance}</strong></li>
+            <li><span>Date d'embauche</span><strong>{personne.date_embauche}</strong></li>
+            <li><span>Nom Conjoint</span><strong>{personne.nom_du_conjoint}</strong></li>
+            <li><span>Personne à prévenir en cas de besoin</span><strong>{personne.personne_a_prevenir}</strong></li>
+            <li><span>Téléphone</span><strong>{personne.contacts}</strong></li>
           </ul>
         </div>
 

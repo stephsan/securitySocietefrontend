@@ -7,6 +7,7 @@ const AjouterContrat = () => {
     const navigate=useNavigate();
     const [prestations,setPrestations]=useState([])
     const [clients,setClients]=useState([])
+    const [newFile, setNewFile] = useState(null);
 
     const [contrat, setContrat] = useState({
         client_id: "",
@@ -83,11 +84,34 @@ const fetchPrestations = async()=>{
         e.preventDefault();
       console.log(JSON.stringify(contrat));
         try {
-            await api.post("/contrats/", contrat, {
+          const formData = new FormData();
+          formData.append("client_id", contrat.client_id);
+          formData.append("clause_particulieres", contrat.clause_particulieres || "");
+
+          // Lignes de contrat (tableau)
+          formData.append("lignes", JSON.stringify(contrat.lignes));
+          contrat.lignes.forEach((ligne, index) => {
+            formData.append(`lignes[${index}][prestation_id]`, ligne.prestation_id);
+            formData.append(`lignes[${index}][quantite]`, ligne.quantite);
+            formData.append(`lignes[${index}][montant]`, ligne.montant);
+            formData.append(`lignes[${index}][montant_prestation]`, ligne.montant_prestation);
+          });
+
+          // Fichier
+          if (newFile) {
+            formData.append("contract_file", newFile);
+          }
+            await api.post("/contrats/", formData, {
                 headers: {
                   "Content-Type": "multipart/form-data"
                     }
                 });
+
+              // await api.post(`/contrats/${id}?_method=PUT`, formData, {
+              //   headers: {
+              //     "Content-Type": "multipart/form-data",
+              //   },
+              // });
         //   const response = await fetch("http://localhost:8000/api/contrats", {
         //     method: "POST",
         //     headers: {
@@ -120,6 +144,14 @@ const fetchPrestations = async()=>{
 
         <div className="card-body">
           <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+              <label className="form-label">Joindre une copie du contrat</label>
+              <input
+                type="file"
+                className="form-control"
+                onChange={(e) => setNewFile(e.target.files[0])}
+              />
+            </div>
             {/* Client */}
             <div className="mb-3">
               <label className="form-label">Client</label>

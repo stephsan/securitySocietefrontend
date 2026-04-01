@@ -1,6 +1,6 @@
 
 import './App.css';
-import Dashboard from './pages/Dashboard';
+
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import User from './pages/User';
 import Layout from './pages/Layout';
@@ -19,9 +19,10 @@ import Prestation from './pages/Parametres/Prestation';
 import AjouterContrat from './pages/AjouterContrat';
 import ListerContrat from './pages/ListerContrat';
 import ModifierContrat from './pages/ModifierContrat';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
-  return (<BrowserRouter>
+  return (<BrowserRouter basename="/securitys_ok/">
     <Routes>
       <Route path="/" element={<Auth />} />
       <Route element={<ProtectedRoute />}>
@@ -40,6 +41,7 @@ function App() {
           <Route path='/add-contrat' element={<AjouterContrat/>}/>
           <Route path='/lister-contrat' element={<ListerContrat/>}/>
           <Route path='/modifier-contrat/:id' element={<ModifierContrat/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
 
         </Route>
       </Route>

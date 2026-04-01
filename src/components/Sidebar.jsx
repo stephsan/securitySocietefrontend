@@ -12,14 +12,14 @@ function Sidebar() {
 		{/* <div className="sidebar-brand-icon rotate-n-15">
 			<i className="fas fa-laugh-wink"></i>
 		</div> */}
-		<div className="sidebar-brand-text mx-3">GesTSecure <sup></sup></div>
+		<div className="sidebar-brand-text mx-3">Protec-Sûr <sup></sup></div>
 	</a>
 
 
 	<hr className="sidebar-divider my-0"/>
 
 	<li className="nav-item">
-		 <NavLink to="/" className="nav-link" href="index.html">
+		 <NavLink to="/dashboard" className="nav-link" href="index.html">
 			<i className="fas fa-fw fa-tachometer-alt"></i>
 		<span>Dashboard</span></NavLink> 
 	</li>
@@ -50,7 +50,7 @@ function Sidebar() {
 		<a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
 			aria-expanded="true" aria-controls="collapseUtilities">
 			<i className="fas fa-fw fa-wrench"></i>
-			<span>Ressources Humaine</span>
+			<span>Ressources Humaines</span>
 		</a>
 		<div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"
 			data-parent="#accordionSidebar">

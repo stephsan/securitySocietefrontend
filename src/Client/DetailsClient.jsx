@@ -13,6 +13,11 @@ const DetailsClient = () => {
     const [lignesFacture, setLignesFacture] = useState([]);
     const [dateDebut, setDateDebut] = useState("");
     const [dateFin, setDateFin] = useState("");
+
+    const [modalStatutOpen, setModalStatutOpen] = useState(false);
+    const [factureSelectionnee, setFactureSelectionnee] = useState(null);
+    const [actionStatut, setActionStatut] = useState("");
+
     const ouvrirFacturation = (contrat) => {
       console.log(contrat)
       const lignes = contrat.lignes.map(ligne => ({
@@ -38,6 +43,24 @@ const DetailsClient = () => {
   
     setLignesFacture(nouvellesLignes);
   };
+  const ouvrirModalStatut = (facture, action) => {
+    setFactureSelectionnee(facture);
+    setActionStatut(action);
+    setModalStatutOpen(true);
+  };
+
+  const confirmerChangementStatut = async () => {
+    try {
+      await changerStatut(factureSelectionnee.facture_id, actionStatut);
+  
+      setModalStatutOpen(false);
+      setFactureSelectionnee(null);
+      setActionStatut("");
+  
+    } catch (error) {
+      showError("Erreur lors du changement de statut");
+    }
+  };
 //Creation de la facture 
 
 const creerFacture = async () => {
@@ -53,8 +76,6 @@ const creerFacture = async () => {
       setModalFactureOpen(false);
       setDateDebut("");
       setDateFin("");
-     
-
     } catch (error) {
         if(error.status==400){
             showError('Une facture a deja été créée pour ce contrat sur la même période');
@@ -82,6 +103,22 @@ const creerFacture = async () => {
   
     } catch (error) {
       showError("Erreur lors du téléchargement du PDF");
+    }
+  };
+  //Changer le statut d'une facture
+  const changerStatut = async (factureId, action) => {
+    try {
+      await api.post(`/factures/${factureId}/changer-statut`, {
+        action: action
+      });
+  
+      successMessage("Statut mis à jour avec succès");
+  
+      // 🔄 refresh
+      await recupererClient();
+  
+    } catch (error) {
+      showError("Erreur lors du changement de statut");
     }
   };
 //Details du client 
@@ -221,18 +258,39 @@ if (!client) {
                 <td>{index + 1}</td>
                 <td>{facture.numero_facture}</td>
                 <td>{facture.numero_contrat}</td>
-                <td>{facture.date_debut}</td>
-                <td>{facture.date_fin}</td>
+                <td>{facture.date_debut} au {facture.date_fin}</td>
                 <td>{facture.montant_total}</td>
-                <td>En cours</td>
+                <td>{facture.statut}</td>
 
                 <td>
-                  {/* <a href={facture.download_url} className="btn btn-sm btn-default">
-                    <i className="bi bi-eye"></i>
-                  </a>
-                  <a  className="btn btn-sm btn-primary me-2" onClick={() => openModal(doc)}>
-                    <i className="bi bi-pencil"></i>
-                  </a> */}
+                  
+                    {facture.statut == "brouillon" && (
+                      <button
+                        className="btn btn-sm btn-success me-2"
+                        onClick={() => ouvrirModalStatut(facture, "valider")}
+                      >
+                        ✔ Valider
+                      </button>
+                    )}
+
+                    {/* VALIDEE */}
+                    {facture.statut === "validee" && (
+                      <>
+                        <button
+                          className="btn btn-sm btn-primary me-2"
+                          onClick={() => ouvrirModalStatut(facture, "payer")}
+                        >
+                          💰 Payer
+                        </button>
+
+                        <button
+                          className="btn btn-sm btn-danger"
+                          onClick={() => ouvrirModalStatut(facture, "rejeter")}
+                        >
+                          ↩ Rejeter
+                        </button>
+                      </>
+                    )}
                   <button
                     className="btn btn-sm btn-secondary"
                     onClick={() => imprimerFacture(facture.facture_id)}
@@ -247,6 +305,44 @@ if (!client) {
       </div> 
 
     </div>
+    {modalStatutOpen && (
+  <div className="modal fade show d-block bg-dark bg-opacity-50">
+    <div className="modal-dialog">
+      <div className="modal-content p-4">
+
+        <h5>Confirmation</h5>
+
+        <p>
+          Voulez-vous vraiment{" "}
+          <strong>
+            {actionStatut === "valider" && "valider"}
+            {actionStatut === "payer" && "marquer comme payée"}
+            {actionStatut === "rejeter" && "rejeter"}
+          </strong>{" "}
+          la facture{" "}
+          <strong>{factureSelectionnee?.numero_facture}</strong> ?
+        </p>
+
+        <div className="d-flex justify-content-end gap-2">
+          <button
+            className="btn btn-secondary"
+            onClick={() => setModalStatutOpen(false)}
+          >
+            Annuler
+          </button>
+
+          <button
+            className="btn btn-danger"
+            onClick={confirmerChangementStatut}
+          >
+            Confirmer
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+)}
 {/* {modalOpen && (
 
 <div className="modal fade show d-block bg-dark bg-opacity-50">

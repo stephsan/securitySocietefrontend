@@ -53,7 +53,7 @@ const Auth = () => {
     // }
      useEffect(() => {
        if (user) {
-         navigate("/liste-personne");
+         navigate("/Dashboard");
        }
      }, [user]);
   return (
@@ -63,7 +63,10 @@ const Auth = () => {
 
     <div className={styles.loginHeader}>
       <div className={styles.companyLogo}>
-        <div className={styles.logoIcon}>🏢</div>
+        <div>
+        <img class="img-profile rounded-circle" width={100}
+                                    src="adminkit/img/logo_protect_sur.png"/>
+        </div>
       </div>
       <h2>Bienvenue Secure</h2>
       <p>Entrez vos identifiant SVP</p>

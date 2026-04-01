@@ -6,6 +6,7 @@ import api from '../api/api';
 const ModifierContrat = () => {
     const [prestations, setPrestations] = useState([]);
   const [clients, setClients] = useState([]);
+  const [newFile, setNewFile] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -101,7 +102,30 @@ const ModifierContrat = () => {
     e.preventDefault();
 
     try {
-      await api.put(`/contrats/${id}`, contrat);
+      const formData = new FormData();
+
+      // Champs simples
+      formData.append("client_id", contrat.client_id);
+      formData.append("clause_particulieres", contrat.clause_particulieres || "");
+
+      // Lignes de contrat (tableau)
+      formData.append("lignes", JSON.stringify(contrat.lignes));
+      contrat.lignes.forEach((ligne, index) => {
+        formData.append(`lignes[${index}][prestation_id]`, ligne.prestation_id);
+        formData.append(`lignes[${index}][quantite]`, ligne.quantite);
+        formData.append(`lignes[${index}][montant]`, ligne.montant);
+        formData.append(`lignes[${index}][montant_prestation]`, ligne.montant_prestation);
+      });
+
+      // Fichier
+      if (newFile) {
+        formData.append("contract_file", newFile);
+      }
+      await api.post(`/contrats/${id}?_method=PUT`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       successMessage("Contrat modifié avec succès");
       navigate("/lister-contrat");
     } catch (error) {
@@ -117,7 +141,15 @@ const ModifierContrat = () => {
 
         <div className="card-body">
           <form onSubmit={handleSubmit}>
-
+          <div className="mb-3">
+              <label className="form-label">Joindre une copie du contrat</label>
+              <input
+                type="file"
+                className="form-control"
+                onChange={(e) => setNewFile(e.target.files[0])}
+              />
+            </div>
+   
             {/* CLIENT */}
             <div className="mb-3">
               <label className="form-label">Client</label>
@@ -156,10 +188,8 @@ const ModifierContrat = () => {
 
             <hr />
             <h6>Lignes du contrat</h6>
-
             {contrat.lignes.map((ligne, index) => (
               <div key={index} className="row align-items-end mb-3">
-
                 {/* PRESTATION */}
                 <div className="col-md-3">
                   <label className="form-label">Prestation</label>
@@ -179,7 +209,6 @@ const ModifierContrat = () => {
                     ))}
                   </select>
                 </div>
-
                 {/* QUANTITE */}
                 <div className="col-md-2">
                   <label className="form-label">Quantité</label>
@@ -193,7 +222,6 @@ const ModifierContrat = () => {
                     }
                   />
                 </div>
-
                 {/* MONTANT */}
                 <div className="col-md-2">
                   <label className="form-label">Montant</label>
@@ -208,7 +236,6 @@ const ModifierContrat = () => {
                     required
                   />
                 </div>
-
                 {/* MONTANT PRESTATION */}
                 <div className="col-md-2">
                   <label className="form-label">Montant prestation</label>
@@ -219,7 +246,6 @@ const ModifierContrat = () => {
                     disabled
                   />
                 </div>
-
                 {/* DELETE */}
                 <div className="col-md-2">
                   <button

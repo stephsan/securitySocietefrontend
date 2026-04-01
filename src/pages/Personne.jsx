@@ -20,7 +20,7 @@ function Personne() {
     const id=5
     const fetchSituationMatrimoniale = async()=>{
         try{
-          const res = await api.get("/return-valeur/8");
+          const res = await api.get("/return-valeur/11");
           setListeSituationMatrimoniales(res.data.data || res.data);
         }catch(e){
           showError("Erreur chargement situation matrimoniale");
@@ -117,6 +117,12 @@ function Personne() {
             formData.append("prenom", data.prenom);
             formData.append("date_de_naiss", data.date_de_naiss);
             formData.append("date_embauche", data.date_embauche);
+            formData.append("lieu_de_naissance", data.lieu_de_naissance);
+            formData.append("situation_matrimoniale", data.situation_matrimoniale);
+            formData.append("contact", data.contact);
+            formData.append("nom_du_conjoint", data.contact);
+            formData.append("personne_a_prevenir", data.personne_a_prevenir);
+            formData.append("sexe", data.sexe);
             formData.append("image_id", imageId);
             // ajouter fichiers dynamiquement
             Object.keys(documents).forEach(valeurId => {
@@ -204,7 +210,20 @@ function Personne() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6">
+                    <div className="col-md-4">  
+                            <label className="form-label">
+                                    Genre
+                            </label>  
+                            <select 
+                                {...register('sexe')}
+                                className="form-control"
+                                >
+                                <option value="">Choisir une genre</option>
+                                <option value="F">Féminin</option>
+                                <option value="M">Masculin</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4">
                                 <label className="form-label">
                                     Date de Naissance
                                 </label>
@@ -218,31 +237,63 @@ function Personne() {
                                 {errors.date_de_naiss && <small>Date de naissance obligatoire</small>}
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                                 <label className="form-label">
                                     Lieu de Naissance
                                 </label>
                             <div className="mb-3">
                                 <input
                                 type="text"
-                                    {...register('lieu_de_naiss', { required: true })}
+                                    {...register('lieu_de_naissance', { required: true })}
                                     className="form-control"
                                     placeholder="Lieu naissance"
                                 />
-                                    {errors.lieu_de_naiss && <small>lieu de naissance obligatoire</small>}
+                                    {errors.lieu_de_naiss && <small>Lieu de naissance obligatoire</small>}
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-5">  
+                        <div className="col-md-3">  
                             <label className="form-label">
                                     Situation matrimonial
                             </label>  
+                            <select 
+                                {...register('situation_matrimoniale')}
+                                className="form-control"
+                                >
+                                <option value="">Choisir une situation</option>
+
+                                {ListeSituationMatrimoniales.map(p => (
+                                    <option key={p.id} value={p.id}>
+                                    {p.libelle}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-4">
                             <label className="form-label">
-                                    Nom du conjoint
-                            </label>  
+                                    Nom Complet du conjoint
+                            </label> 
+                            <div className="mb-3">
+                                <input
+                                type="text"
+                                    {...register('nom_du_conjoint')}
+                                    className="form-control"
+                                    placeholder="Nom du conjoint"
+                                />
+                                 
+                            </div> 
+                        </div>
+                        <div className="col-md-5">  
+                            <label className="form-label">
+                                    Personne à prévenir en cas de besoin
+                            </label>
+                            <input
+                                type="text"
+                                    {...register('personne_a_prevenir', { required: true })}
+                                    className="form-control"
+                                    placeholder="Personne à prévenir en cas de besoin"
+                             />
                         </div>
                     </div>
                     <div className="row">
@@ -260,14 +311,15 @@ function Personne() {
                         </div>
                         <div className="col-md-6">  
                             <label className="form-label">
-                                    Personne à prévenir en cas de besoin
+                                    Date d'embauche
                             </label>
                             <input
-                                type="text"
-                                    {...register('date_de_naiss', { required: true })}
+                                type="date"
+                                    {...register('date_embauche', { required: true })}
                                     className="form-control"
-                                    placeholder="Personne à prévenir en cas de besoin"
+                                    placeholder="Date d'embauche"
                              />
+                             {errors.date_embauche && <small>Date d'embauche obligatoire</small>}
                         </div>
                     
                     </div>

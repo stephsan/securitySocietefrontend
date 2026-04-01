@@ -8,6 +8,29 @@ const ListerContrat = () => {
     const[contrats,setContrat]=useState();
     const navigate=useNavigate()
     
+    const downloadContrat = async (contratId) => {
+      try {
+        const response = await api.get(`/contrats/${contratId}/download`, {
+          responseType: "blob",
+        });
+    
+        const file = new Blob([response.data]);
+        const fileURL = window.URL.createObjectURL(file);
+        const link = document.createElement("a");
+        link.href = fileURL;
+    
+        // nom du fichier
+        link.setAttribute("download", `contrat_${contratId}.pdf`);
+    
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    
+      } catch (error) {
+        console.error(error);
+        showError("Erreur téléchargement du contrat");
+      }
+    };
     
     const ListerContrat = async () => {
         try {
@@ -62,11 +85,11 @@ const ListerContrat = () => {
               <td>{contrat?.montant_contrat || "-"}</td>
 
               <td className="text-center">
-              <button 
-                className="btn btn-sm btn-warning me-2"
-                onClick={() => navigate(`/modifier-contrat/${contrat.id}`)}
+              <button
+                  className="btn btn-sm btn-primary"
+                  onClick={() => downloadContrat(contrat.id)}
                 >
-                <i className="bi bi-pencil"></i>
+                  <i className="bi bi-download"></i>
             </button>
             <button 
                 className="btn btn-sm btn-warning me-2"
